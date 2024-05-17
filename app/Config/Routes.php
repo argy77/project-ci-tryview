@@ -24,6 +24,6 @@ $routes->get('hasil-lab/', 'HasilLabController::showByDate', ['filter' => 'authG
 
 $routes->get('hasil-lab/showAllData', 'HasilLabController::showAllData', ['filter' => 'authGuard']);
 
-$routes->post('hasil-lab/search', 'HasilLabController::search', ['filter' => 'authGuard']);
+// $routes->post('hasil-lab/search', 'HasilLabController::search', ['filter' => 'authGuard']);
 
 // $routes->get('hasil-lab/', 'HasilLabController::showByDate');

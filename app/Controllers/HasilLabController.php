@@ -10,30 +10,48 @@ class HasilLabController extends BaseController
 {
     public function showAllData()
     {
-        $model = new HasilLabModel();
-        $data['hasil_lab'] = $model->findAll();
+        // $model = new HasilLabModel();
+        // $data['hasil_lab'] = $model->findAll();
+        // return view('pages/index', $data);
+
+        $db      = \Config\Database::connect();
+        $builder = $db->table('permintaan_lab_wynacom');
+        $builder->select('*');
+        $builder->join('hasil_lab_waynacom', 'hasil_lab_waynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'left');
+        $query = $builder->get();
+        $data['hasil_lab'] = $query->getResultArray();
+        // dd($data);
         return view('pages/index', $data);
     }
 
-    public function search()
-    {
-        $model = new HasilLabModel();
-        $keyword = $this->request->getVar('keyword');
-        $data['hasil_lab'] = $model->like('OrderDateSystem', $keyword)
-            ->orLike('visitNumber', $keyword)
-            ->orLike('HisRegNo', $keyword)
-            ->findAll();
-        return view('pages/index', $data);
-    }
+    // public function search()
+    // {
+    //     $model = new HasilLabModel();
+    //     $keyword = $this->request->getVar('keyword');
+    //     $data['hasil_lab'] = $model->like('OrderDateSystem', $keyword)
+    //         ->orLike('visitNumber', $keyword)
+    //         ->orLike('HisRegNo', $keyword)
+    //         ->findAll();
+    //     return view('pages/index', $data);
+    // }
 
 
     public function showByDate()
     {
-        $model = new HasilLabModel();
+        // $model = new HasilLabModel();
         date_default_timezone_set('Asia/Jakarta');
         $date = new DateTime('today');
-        $data['hasil_lab'] = $model->where('OrderDateSystem', $date->format('Y-m-d'))
-            ->findAll();
+        // $data['hasil_lab'] = $model->where('OrderDateSystem', $date->format('Y-m-d'))
+        //     ->findAll();
+        // return view('pages/index', $data);
+
+        $db      = \Config\Database::connect();
+        $builder = $db->table('permintaan_lab_wynacom');
+        $builder->select('*');
+        $builder->join('hasil_lab_waynacom', 'hasil_lab_waynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'left');
+        $builder->where('OrderDateSystem', $date->format('Y-m-d'));
+        $query = $builder->get();
+        $data['hasil_lab'] = $query->getResultArray();
         return view('pages/index', $data);
     }
 

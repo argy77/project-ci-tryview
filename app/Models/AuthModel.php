@@ -8,11 +8,11 @@ class AuthModel extends Model
 {
     protected $DBGroup = 'secondDB';
     protected $table = 'pegawai';
-    protected $primaryKey = 'id_pegawai';
-    protected $allowedFields = ['id_pegawai'];
+    protected $primaryKey = 'id';
+    protected $allowedFields = ['nik', 'nama'];
 
-    public function validateLogin($id_pegawai, $password)
+    public function validateLogin($nik)
     {
-        return $this->where(['id_pegawai' => $id_pegawai])->first();
+        return $this->where(['nik' => $nik])->first();
     }
 }

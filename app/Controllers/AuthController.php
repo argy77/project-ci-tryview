@@ -16,18 +16,19 @@ class AuthController extends BaseController
     {
         $authModel = new AuthModel();
 
-        $id_pegawai = $this->request->getPost('id_pegawai');
-        $true = $this->request->getPost('id_pegawai');
+        $nik = $this->request->getPost('nik');
+        $true = $this->request->getPost('nik');
 
-        $user = $authModel->validateLogin($id_pegawai, $true);
+        $user = $authModel->validateLogin($nik, $true);
 
         if ($user) {
             session()->set('isLoggedIn', true);
-            session()->set('id_pegawai', $id_pegawai);
+            session()->set('nik', $nik);
+            session()->set('nama', $user['nama']);
 
             return redirect()->to('/hasil-lab/');
         } else {
-            return redirect()->back()->with('error', 'Invalid Login : Periksa Id Petugas Anda!');
+            return redirect()->back()->with('error', 'Invalid Login : Periksa Id Pegawai Anda!');
         }
     }
 

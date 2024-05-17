@@ -22,7 +22,7 @@
                                 <?php endif; ?>
                                 <form class="user" method="post" action="<?= base_url('auth/process') ?>">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="id_pegawai" id="id_pegawai" required placeholder="Masukkan id Pegawai..">
+                                        <input type="text" class="form-control form-control-user" name="nik" id="nik" required placeholder="Masukkan id Pegawai..">
                                     </div>
 
                                     <!-- <div class="form-group">
