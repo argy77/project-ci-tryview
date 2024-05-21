@@ -14,14 +14,22 @@ class HasilLabController extends BaseController
         // $data['hasil_lab'] = $model->findAll();
         // return view('pages/index', $data);
 
+        // coba 1
+        // $db      = \Config\Database::connect();
+        // $builder = $db->table('permintaan_lab_wynacom');
+        // $builder->select('*');
+        // $builder->join('hasil_lab_waynacom', 'hasil_lab_waynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'left');
+        // $query = $builder->get();
+        // $data['hasil_lab'] = $query->getResultArray();
+        // return view('pages/index', $data);
+
+        // Real one
         $db      = \Config\Database::connect();
         $builder = $db->table('permintaan_lab_wynacom');
         $builder->select('*');
-        $builder->join('hasil_lab_waynacom', 'hasil_lab_waynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'left');
         $query = $builder->get();
-        $data['hasil_lab'] = $query->getResultArray();
-        // dd($data);
-        return view('pages/index', $data);
+        $d['hasil_lab'] = $query->getResultArray();
+        return view('pages/index', $d);
     }
 
     // public function search()
@@ -38,32 +46,27 @@ class HasilLabController extends BaseController
 
     public function showByDate()
     {
-        // $model = new HasilLabModel();
+        // coba 1
+        $db      = \Config\Database::connect();
         date_default_timezone_set('Asia/Jakarta');
         $date = new DateTime('today');
-        // $data['hasil_lab'] = $model->where('OrderDateSystem', $date->format('Y-m-d'))
-        //     ->findAll();
-        // return view('pages/index', $data);
-
-        $db      = \Config\Database::connect();
         $builder = $db->table('permintaan_lab_wynacom');
         $builder->select('*');
-        $builder->join('hasil_lab_waynacom', 'hasil_lab_waynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'left');
-        $builder->where('OrderDateSystem', $date->format('Y-m-d'));
+        $builder->where('permintaan_lab_wynacom.orderDateSystem', $date->format('Y-m-d'));
         $query = $builder->get();
-        $data['hasil_lab'] = $query->getResultArray();
-        return view('pages/index', $data);
+        $d['hasil_lab'] = $query->getResultArray();
+        return view('pages/index', $d);
     }
 
-    public function showViewLab()
+    public function getLabResults($orderNumber = '')
     {
-        // $model = new HasilLabModel();
-        // $db      = \Config\Database::connect();
-        // $db->table('permintaan_lab_wynacom');
-        // date_default_timezone_set('Asia/Jakarta');
-        // $date = new DateTime('today');
-        // $data['hasil_lab'] = $model->join('permintaan_lab_wynacom', 'hasil_lab_wynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'inner')
-        //     ->where('OrderDateSystem', $date->format('Y-m-d'));
-        // return view('pages/index', $data);
+        $db      = \Config\Database::connect();
+        $builder = $db->table('hasil_lab_waynacom');
+        $builder->select('*');
+        $builder->join('permintaan_lab_wynacom', 'hasil_lab_waynacom.HisRegNo = permintaan_lab_wynacom.orderNumber', 'left');
+        $builder->where('permintaan_lab_wynacom.orderNumber', $orderNumber);
+        $query = $builder->get();
+        $data = $query->getResultArray();
+        return $this->response->setJSON($data);
     }
 }

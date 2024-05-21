@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Bulan Mei 2024 pada 18.03
+-- Waktu pembuatan: 17 Bulan Mei 2024 pada 04.36
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.1.25
 
@@ -28,18 +28,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `pegawai` (
-  `id_pegawai` int(255) NOT NULL,
-  `nama_pegawai` varchar(200) NOT NULL,
+  `id` int(255) NOT NULL,
+  `nama` varchar(200) NOT NULL,
   `role` varchar(100) NOT NULL,
-  `status` int(1) NOT NULL
+  `status` int(1) NOT NULL,
+  `nik` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `pegawai`
 --
 
-INSERT INTO `pegawai` (`id_pegawai`, `nama_pegawai`, `role`, `status`) VALUES
-(101, 'admin1', 'admin', 1);
+INSERT INTO `pegawai` (`id`, `nama`, `role`, `status`, `nik`) VALUES
+(101, 'admin1', 'admin', 1, 'P0001');
 
 --
 -- Indexes for dumped tables
@@ -49,7 +50,7 @@ INSERT INTO `pegawai` (`id_pegawai`, `nama_pegawai`, `role`, `status`) VALUES
 -- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  ADD PRIMARY KEY (`id_pegawai`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -59,7 +60,7 @@ ALTER TABLE `pegawai`
 -- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id_pegawai` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
