@@ -25,7 +25,7 @@
                     <!-- <h1 class="h3 mb-4 text-gray-800">Lab Results</h1> -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Lab Results List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Lab Order List</h6>
                         </div>
                         <div class="card-body">
 
@@ -33,14 +33,16 @@
                             <div class="row mb-2">
 
                                 <div class="col d-flex justify-content-start">
-
+                                    <?php echo anchor('hasil-lab/', 'Show Today', 'class="btn btn-secondary responsive-button mr-2"'); ?>
                                     <form action="<?= base_url('hasil-lab/showAllData') ?>" method="get">
-                                        <button type="submit" class="btn btn-primary responsive-button mr-2">Show All</button>
+                                        <button type="submit" class="btn btn-primary responsive-button">Show All</button>
                                     </form>
-                                    <?php echo anchor('hasil-lab/', 'Show Today', 'class="btn btn-secondary responsive-button"'); ?>
                                 </div>
 
-                                <div class="col-lg-9">
+                                <div class="col d-flex justify-content-end">
+                                    <button id="refreshButton" class="btn btn-primary">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
                                     <!-- <div class="float-right">
                                 <form action="hasil-lab/search" method="post">
                                     <input type="text" name="keyword" placeholder="Search..">
@@ -53,8 +55,8 @@
                             <div>
 
                                 <!-- Table daftar permintaan wynacom -->
-                                <div class="table-responsive-sm">
-                                    <table class="table table-striped table-bordered" id="myTable" class="display" width="100%" cellspacing="0">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered" id="myTable" class="display" width="100%" overflow="auto" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Order Date System</th>
@@ -63,7 +65,7 @@
                                                 <th>MRN</th>
                                                 <th>Nama Pasien</th>
                                                 <th>Diagnose Name</th>
-                                                <th>Physician Name</th>
+                                                <th>Doctor Name</th>
                                                 <th>Ruangan</th>
                                                 <th>Kelas</th>
                                                 <th>Status</th>
@@ -83,7 +85,7 @@
                                                     <td><?= $hasil['className'] ?></td>
                                                     <td><?= $hasil['hasil'] == '1' ? 'Sudah Keluar' :  'Belum Keluar' ?></td>
                                                     <td>
-                                                        <button onclick="loadLabResults('<?= $hasil['orderNumber']; ?>')" class="btn btn-primary responsive-button">Details</button>
+                                                        <button onclick="loadLabResults('<?= $hasil['orderNumber']; ?>')" class="btn btn-primary responsive-button">Result</button>
 
                                                     </td>
                                                 </tr>
@@ -100,7 +102,7 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Detail Lab Results</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Lab Results</h6>
                         </div>
                         <div class="card-body">
 
@@ -110,18 +112,21 @@
                             <!-- <div> -->
 
                             <!-- Table daftar permintaan wynacom -->
-                            <div class="table-responsive-sm">
-                                <table class="table table-striped table-bordered" class="display" width="100%" cellspacing="0" id="labResultsTable">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" class="display" overflow="auto" width="100%" cellspacing="0" id="labResultsTable">
                                     <thead>
                                         <tr>
                                             <!-- <th>id</th> -->
+                                            <!-- <th>No.</th> -->
                                             <th>Order Date System</th>
                                             <th>Visit Number</th>
                                             <th>No. RM</th>
                                             <th>Nama Pasien</th>
-                                            <th>Physician Name</th>
+                                            <th>Doctor Name</th>
                                             <th>Test Name</th>
                                             <th>Result</th>
+                                            <th>Satuan</th>
+                                            <th>Reference Value</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -130,6 +135,8 @@
 
                                 </table>
 
+
+                                <!-- THIS IS MY CURRENT JSON SCRIPT -->
                                 <script>
                                     function loadLabResults(orderNumber) {
 
@@ -151,11 +158,13 @@
                                                             '<td>' + result.physicianName + '</td>' +
                                                             '<td>' + result.TestName + '</td>' +
                                                             '<td>' + result.Result + '</td>' +
+                                                            '<td>' + result.TestUnitsName + '</td>' +
+                                                            '<td>' + result.ReferenceValue + '</td>' +
                                                             '</tr>';
                                                         tableBody.append(row);
                                                     });
                                                 } else {
-                                                    tableBody.append('<tr><td colspan="8" class="text-center">Oopss.. No lab results found.</td></tr>');
+                                                    tableBody.append('<tr><td colspan="9" class="text-center">Oopss.. No lab results found.</td></tr>');
                                                 }
                                             },
                                             error: function() {
@@ -163,6 +172,10 @@
                                             }
                                         });
                                     }
+
+                                    document.getElementById('refreshButton').addEventListener('click', function() {
+                                        location.reload();
+                                    });
                                 </script>
 
                             </div>

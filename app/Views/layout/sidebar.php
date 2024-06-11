@@ -40,8 +40,8 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('auth/logout') ?>">
-            <i class="fa fa-door-open"></i>
+        <a class="nav-link" href="<?= base_url('auth/logout') ?>" data-toggle="modal" data-target="#logoutModal">
+            <i class=" fa fa-door-open"></i>
             <span>Log-out</span></a>
     </li>
 
